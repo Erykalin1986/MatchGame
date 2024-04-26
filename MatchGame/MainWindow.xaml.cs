@@ -17,8 +17,8 @@ namespace MatchGame
         private void SetUpGame()
         {
             //Создает список из восьми пар эмодзи
-            List<string> animalEmoji = new ()
-            {
+            List<string> animalEmoji =
+            [
                 "🐙","🐙",
                 "🐟","🐟",
                 "🐘","🐘",
@@ -27,10 +27,10 @@ namespace MatchGame
                 "🦕","🦕",
                 "🦍","🦍",
                 "🦔","🦔",
-            };
+            ];
 
             //Создает новый генератор случайных чисел
-            Random rnd = new Random();
+            Random rnd = new ();
 
             //Находит каждый элемент TextBlock в сетке и повторяет следующие команды для каждого элемента
             foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
