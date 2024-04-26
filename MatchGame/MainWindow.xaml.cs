@@ -17,7 +17,7 @@ namespace MatchGame
         private void SetUpGame()
         {
             //Создает список из восьми пар эмодзи
-            List<string> animalEmoji = new List<string>()
+            List<string> animalEmoji = new ()
             {
                 "🐙","🐙",
                 "🐟","🐟",
