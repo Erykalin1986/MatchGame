@@ -30,7 +30,7 @@ namespace MatchGame
             ];
 
             //Создает новый генератор случайных чисел
-            Random rnd = new ();
+            Random rnd = new();
 
             //Находит каждый элемент TextBlock в сетке и повторяет следующие команды для каждого элемента
             foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
