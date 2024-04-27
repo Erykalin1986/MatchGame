@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatchGame"
         mc:Ignorable="d"
-        Title="Найдите всех подходящих животных" Height="450" Width="410">
-    <Grid x:Name="mainGrid">
+        Title="Найдите всех подходящих животных" Height="500" Width="600">
+    <Grid x:Name="mainGrid" Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -19,7 +19,10 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
+
         <TextBlock Text="?" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" MouseDown="TextBlock_MouseDown" />
         <TextBlock Text="?" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" MouseDown="TextBlock_MouseDown" />
         <TextBlock Text="?" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" MouseDown="TextBlock_MouseDown" />
@@ -40,8 +43,12 @@
         <TextBlock Text="?" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" MouseDown="TextBlock_MouseDown" />
         <TextBlock Text="?" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" MouseDown="TextBlock_MouseDown" />
 
-        <TextBlock x:Name="timeTextBlock" Text="Elapsed time" FontSize="36"
+        <TextBlock x:Name="theBestTimeTextBlock" Text="Лучшее время" FontSize="36"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Grid.Row="4" Grid.ColumnSpan="4" MouseDown="TimeTextBlock_MouseDown"/>
+                   Grid.Row="4" Grid.ColumnSpan="4" Visibility="Hidden" />
+
+        <TextBlock x:Name="timeTextBlock" Text="Пройденное время" FontSize="36"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                   Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="4" MouseDown="TimeTextBlock_MouseDown" />
     </Grid>
 </Window>

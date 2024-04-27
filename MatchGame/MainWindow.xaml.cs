@@ -9,13 +9,19 @@ namespace MatchGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Таймер.
         DispatcherTimer timer = new DispatcherTimer();
+        // Прошедшие десятые доли секунды.
         int tenthsOfSecondsElapsed;
+        // Найденные совпадения.
         int matchesFound;
+        // Лучшее время за которое найдены все совпадения.
+        float theBestTime = 0;
 
         public MainWindow()
         {
             InitializeComponent();
+            theBestTimeTextBlock.Text = theBestTimeTextBlock.Text + " - " + theBestTime.ToString("0.0s");
             timer.Interval = TimeSpan.FromSeconds(.1);
             timer.Tick += Timer_Tick;
             SetUpGame();
@@ -24,11 +30,21 @@ namespace MatchGame
         private void Timer_Tick(object? sender, EventArgs e)
         {
             tenthsOfSecondsElapsed++;
-            timeTextBlock.Text = (tenthsOfSecondsElapsed / 10F).ToString("0.0s");
+            float timerValue = (tenthsOfSecondsElapsed / 10F);
+            timeTextBlock.Text = timerValue.ToString("0.0s");
+
             if (matchesFound == 8)
             {
+                if (theBestTime == 0 || theBestTime > timerValue)
+                {
+                    theBestTime = timerValue;
+                    theBestTimeTextBlock.Text = "Лучшее время - " + theBestTime.ToString("0.0s");
+                }
+
+                theBestTimeTextBlock.Visibility = Visibility.Visible;
                 timer.Stop();
-                timeTextBlock.Text = timeTextBlock.Text + " - Играть еще раз?";
+                timeTextBlock.Text = $"Пройденное время - {timeTextBlock.Text} \n" +
+                                        $"Играть еще раз?";
             }
         }
 
@@ -41,10 +57,14 @@ namespace MatchGame
 
             if (timeTextBlock.Text.Contains(" - Играть еще раз?"))
             {
+                theBestTimeTextBlock.Visibility = Visibility.Hidden;
                 SetUpGame();
             }
         }
 
+        /// <summary>
+        /// Настройка игры.
+        /// </summary>
         private void SetUpGame()
         {
             //Создает список из восьми пар эмодзи
@@ -66,7 +86,7 @@ namespace MatchGame
             //Находит каждый элемент TextBlock в сетке и повторяет следующие команды для каждого элемента
             foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
             {
-                if (textBlock.Name != "timeTextBlock")
+                if (textBlock.Name != "timeTextBlock" && textBlock.Name != "theBestTimeTextBlock")
                 {
                     //Выбирает случайное число от 0 до количества эмодзи в списке и назначает ему имя «index»
                     int index = rnd.Next(animalEmoji.Count);
@@ -74,6 +94,7 @@ namespace MatchGame
                     string nextEmoji = animalEmoji[index];
                     //Обновляет TextBlock случайным эмодзи из списка
                     textBlock.Text = nextEmoji;
+                    // Делвет видимыми блоки с животными.
                     textBlock.Visibility = Visibility.Visible;
                     //Удаляет случайный эмодзи из списка
                     animalEmoji.RemoveAt(index);
@@ -85,7 +106,10 @@ namespace MatchGame
             matchesFound = 0;
         }
 
-        TextBlock lastTextBlockClicked;
+        /// <summary>
+        /// Последний текстовый блок по которому выполнен щелчок.
+        /// </summary>
+        TextBlock? lastTextBlockClicked;
         /// <summary>
         /// Этот признак определяет, щелкнул ли игрок на первом животном в паре, и теперь пытается найти для него пару.
         /// </summary>
