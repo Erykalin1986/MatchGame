@@ -45,5 +45,38 @@ namespace MatchGame
                 animalEmoji.RemoveAt(index);
             }
         }
+
+        TextBlock lastTextBlockClicked;
+        bool findingMatch = false;
+
+        /// <summary>
+        /// Если щелчок сделан на первом животном в паре, 
+        /// сохранить информацию о том, на каком элементе TextBlock щелкнул пользователь, 
+        /// и убрать животное с экрана.Если это второе животное в паре, либо убрать его с экрана(если животные составляют пару), 
+        /// либо вернуть на экран первое животное(если животные разные).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            TextBlock? textBlock = sender as TextBlock;
+
+            if (findingMatch == false)
+            {
+                textBlock!.Visibility = Visibility.Hidden;
+                lastTextBlockClicked = textBlock;
+                findingMatch = true;
+            }
+            else if (textBlock!.Text == lastTextBlockClicked.Text)
+            {
+                textBlock.Visibility = Visibility.Hidden;
+                findingMatch = false;
+            }
+            else
+            {
+                lastTextBlockClicked.Visibility = Visibility.Visible;
+                findingMatch = false;
+            }
+        }
     }
 }
