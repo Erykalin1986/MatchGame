@@ -43,7 +43,7 @@ namespace MatchGame
 
                 theBestTimeTextBlock.Visibility = Visibility.Visible;
                 timer.Stop();
-                timeTextBlock.Text = $"Пройденное время - {timeTextBlock.Text} \n" +
+                timeTextBlock.Text = $"{timeTextBlock.Text} \n" +
                                         $"Играть еще раз?";
             }
         }

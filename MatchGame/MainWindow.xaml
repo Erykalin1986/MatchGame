@@ -44,7 +44,7 @@
 
         <TextBlock x:Name="theBestTimeTextBlock" Text="Лучшее время" FontSize="36"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Grid.Row="4" Grid.ColumnSpan="4" Visibility="Hidden" />
+                   Grid.Row="4" Grid.ColumnSpan="4" Visibility="Hidden" TextDecorations="Underline" />
 
         <TextBlock x:Name="timeTextBlock" Text="Пройденное время" FontSize="36"
                    HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
