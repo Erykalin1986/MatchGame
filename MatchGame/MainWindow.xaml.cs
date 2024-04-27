@@ -38,6 +38,11 @@ namespace MatchGame
             {
                 SetUpGame();
             }
+
+            if (timeTextBlock.Text.Contains(" - Играть еще раз?"))
+            {
+                SetUpGame();
+            }
         }
 
         private void SetUpGame()
@@ -69,6 +74,7 @@ namespace MatchGame
                     string nextEmoji = animalEmoji[index];
                     //Обновляет TextBlock случайным эмодзи из списка
                     textBlock.Text = nextEmoji;
+                    textBlock.Visibility = Visibility.Visible;
                     //Удаляет случайный эмодзи из списка
                     animalEmoji.RemoveAt(index);
                 }
