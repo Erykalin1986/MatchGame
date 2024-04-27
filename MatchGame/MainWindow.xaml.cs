@@ -31,7 +31,7 @@ namespace MatchGame
         {
             tenthsOfSecondsElapsed++;
             float timerValue = (tenthsOfSecondsElapsed / 10F);
-            timeTextBlock.Text = timerValue.ToString("0.0s");
+            timeTextBlock.Text = "Пройденное время - " + timerValue.ToString("0.0s");
 
             if (matchesFound == 8)
             {
