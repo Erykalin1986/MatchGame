@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace MatchGame
 {
@@ -8,10 +9,35 @@ namespace MatchGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer timer = new DispatcherTimer();
+        int tenthsOfSecondsElapsed;
+        int matchesFound;
+
         public MainWindow()
         {
             InitializeComponent();
+            timer.Interval = TimeSpan.FromSeconds(.1);
+            timer.Tick += Timer_Tick;
             SetUpGame();
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            tenthsOfSecondsElapsed++;
+            timeTextBlock.Text = (tenthsOfSecondsElapsed / 10F).ToString("0.0s");
+            if (matchesFound == 8)
+            {
+                timer.Stop();
+                timeTextBlock.Text = timeTextBlock.Text + " - Играть еще раз?";
+            }
+        }
+
+        private void TimeTextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (matchesFound == 8)
+            {
+                SetUpGame();
+            }
         }
 
         private void SetUpGame()
@@ -35,15 +61,22 @@ namespace MatchGame
             //Находит каждый элемент TextBlock в сетке и повторяет следующие команды для каждого элемента
             foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
             {
-                //Выбирает случайное число от 0 до количества эмодзи в списке и назначает ему имя «index»
-                int index = rnd.Next(animalEmoji.Count);
-                //Использует случайное число с именем «index» для получения случайного эмодзи из списка
-                string nextEmoji = animalEmoji[index];
-                //Обновляет TextBlock случайным эмодзи из списка
-                textBlock.Text = nextEmoji;
-                //Удаляет случайный эмодзи из списка
-                animalEmoji.RemoveAt(index);
+                if (textBlock.Name != "timeTextBlock")
+                {
+                    //Выбирает случайное число от 0 до количества эмодзи в списке и назначает ему имя «index»
+                    int index = rnd.Next(animalEmoji.Count);
+                    //Использует случайное число с именем «index» для получения случайного эмодзи из списка
+                    string nextEmoji = animalEmoji[index];
+                    //Обновляет TextBlock случайным эмодзи из списка
+                    textBlock.Text = nextEmoji;
+                    //Удаляет случайный эмодзи из списка
+                    animalEmoji.RemoveAt(index);
+                }
             }
+
+            timer.Start();
+            tenthsOfSecondsElapsed = 0;
+            matchesFound = 0;
         }
 
         TextBlock lastTextBlockClicked;
@@ -76,6 +109,7 @@ namespace MatchGame
             // а признак findingMatch сбрасывается, чтобы следующее животное, на котором щелкнет игрок, снова считалось первым в паре.
             else if (textBlock!.Text == lastTextBlockClicked.Text)
             {
+                matchesFound++;
                 textBlock.Visibility = Visibility.Hidden;
                 findingMatch = false;
             }
